@@ -1308,7 +1308,7 @@ FinishAttach(struct msg *m)
 	lay = layout_last;
       if (lay)
 	{
-	  LoadLayout(lay, &D_canvas);
+	  LoadLayout(lay);
 	  SetCanvasWindow(D_forecv, 0);
 	}
     }
