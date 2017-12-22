@@ -828,7 +828,13 @@ void ReceiveMsg()
 	case MSG_ATTACH:
 		if (CreateTempDisplay(&m, recvfd, win))
 			break;
+#ifdef CLABO
+		D_processinputdata = 0;
+		D_processinput = ProcessInput;
+		FinishAttach(&m);
+#else
 		AskPassword(&m);
+#endif
 		break;
 	case MSG_ERROR:
 		Msg(0, "%s", m.m.message);
@@ -1322,11 +1328,13 @@ static void DoCommandMsg(Message *mp)
 		return;
 	}
 	user = *FindUserPtr(mp->m.attach.auser);
+#ifndef CLABO
 	if (user == 0) {
 		Msg(0, "Unknown user %s tried to send a command!", mp->m.attach.auser);
 		queryflag = -1;
 		return;
 	}
+#endif
 	/*if (user->u_password && *user->u_password) {
 		Msg(0, "User %s has a password, cannot use remote commands (using -Q or -X option).",
 		    mp->m.attach.auser);

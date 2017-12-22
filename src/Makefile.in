@@ -53,9 +53,9 @@ OFILES=$(CFILES:c=o)
 TESTCFILES := $(wildcard tests/test-*.c)
 TESTBIN := $(TESTCFILES:.c=)
 
-all:	screen
+all:	clbscreen
 
-screen: $(OFILES)
+clbscreen: $(OFILES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
 
 .c.o:
@@ -150,7 +150,7 @@ mdepend: $(CFILES) term.h
 
 depend: depend.in
 	./config.status || ./configure
-	
+
 depend.in: $(CFILES) term.h
 	cp Makefile.in Makefile.in~
 	sed -e '/\#\#\# Dependencies/q' < Makefile.in > tmp_make

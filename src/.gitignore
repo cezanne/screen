@@ -16,6 +16,6 @@ configure
 kmapdef.c
 osdef.h
 term.h
-screen
+clbscreen
 screen.exe
 stamp-h.in

@@ -36,6 +36,8 @@ AH_TEMPLATE([SOCKET_DIR], [Path to socket directory])
 dnl -
 AH_TEMPLATE([SYSTEM_SCREENRC], [Path to system screenrc])
 
+AH_TEMPLATE([CLABO], [Enable clabo build mode])
+
 dnl - pty settings
 AH_TEMPLATE([PTY_MODE], [Default mode for pty devices])
 AH_TEMPLATE([PTY_GROUP], [Default group for pty devices])
@@ -91,7 +93,7 @@ dnl
 AC_ARG_ENABLE(pam, AS_HELP_STRING([--enable-pam],
 	      [enable PAM support (default: enabled)]),
 	      [enable_pam=$enableval],
-	      [enable_pam=yes])
+	      [enable_pam=no])
 AC_ARG_ENABLE(utmp, AS_HELP_STRING([--enable-utmp],
 	      [enable utmp support (default: disabled)]),
 	      [enable_utmp=$enableval],
@@ -104,6 +106,10 @@ AC_ARG_ENABLE(socket-dir, AS_HELP_STRING([--enable-socket-dir],
 	      [enable global socket directory (default: disabled)]),
 	      [enable_socket_dir=$enableval],
 	      [enable_socket_dir=no])
+AC_ARG_ENABLE(clabo, AS_HELP_STRING([--enable-clabo],
+	      [enable clabo mode (default: yes)]),
+	      [enable_clabo=$enableval],
+	      [enable_clabo=yes])
 
 AC_ARG_WITH(system_screenrc, AS_HELP_STRING([--with-system_screenrc],
 	    [set location of system screenrc (default: /etc/screenrc)]),
@@ -182,6 +188,10 @@ AS_IF([test "x$enable_socket_dir" != "xno"], [
 	      [enable_socket_dir="/run/screen"]
 	)
 	AC_DEFINE_UNQUOTED(SOCKET_DIR, "$enable_socket_dir")
+])
+
+AS_IF([test "x$enable_clabo" = "xyes"], [
+	AC_DEFINE(CLABO)
 ])
 
 dnl -- with_sysscreenrc

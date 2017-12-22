@@ -720,11 +720,16 @@ void ProcessInput2(char *ibuf, size_t ilen)
 		slen = ilen;
 		s = ibuf;
 		if (!D_ESCseen) {
+#ifdef CLABO
+			/* ignore escape */
+			ilen = 0;
+#else
 			while (ilen > 0) {
 				if ((unsigned char)*s++ == D_user->u_Esc)
 					break;
 				ilen--;
 			}
+#endif
 			slen -= ilen;
 			if (slen)
 				DoProcess(fore, &ibuf, &slen, 0);
